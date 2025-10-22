@@ -1,0 +1,81 @@
+UPDATE Docker image with missing dependency
+(1) Add missing package to requirements.txt
+(2) docker build --no-cache -t excel-converter-playwright .
+(3) docker run --rm -it excel-converter-playwright:latest
+
+
+
+Run test in Docker container
+docker run --rm -v "%cd%/data:/app/data" excel-converter-playwright ./data/source_excel/SIMPLE_NAVIGATION_PLAYBOOK.xlsx ./data/xslt/xml_to_html_regression_draft.xsl ./data/xml_output
+
+
+Check version of sy lxml in Docker image
+docker run --rm excel-converter-playwright python -m pip show lxml
+
+
+FOLDER ORGANISATION
+
+/app
+├─ excel_to_xml_converter.py
+├─ logger_utils.py
+├─ config.yml
+├─ requirements.txt
+├─ data/
+│   ├─ source_excel/
+│   ├─ xslt/
+│   └─ output/
+│       └─ <org_project_role_timestamp>/
+│           ├─ test_cases.xml
+│           ├─ test_cases.html
+│           ├─ test_cases.pdf
+│           ├─ log_*.log
+├─ tests/
+│   └─ conftest.py
+└─ Dockerfile
+│   
+└─ Utilities
+
+
+IMPLEMENTATION
+
+ Excel Workbook (.xlsx)
+        │
+        ▼
+ excel_to_xml_converter.py
+ (generates test_cases.xml + HTML/PDF snapshot)
+        │
+        ▼
+pytest (with custom loader)
+        │
+        ├─ parses test_cases.xml
+        ├─ executes steps via Selenium / Playwright
+        ├─ logs step-by-step outcomes
+        │
+        ▼
+Allure results (.json)
+        │
+        ▼
+Allure Report (rich visual HTML dashboard)
+
+
+In elevated Powershell:
+Build the container:
+docker build --no-cache -t excel-converter-playwright .
+
+Check available moduules
+docker run --rm --entrypoint python excel-converter-playwright -m pip show lxml openpyxl PyYAML playwright
+
+
+Run test
+(0) Prereqs
+docker build -f Dockerfile.base -t playwright-base:latest .
+docker build -t user-journey-explorer:fast .
+docker inspect user-journey-explorer:fast --format='{{json .Config.Entrypoint}}' (... expecting ["bash","-c","case \"$1\" in ..."])
+
+(1) docker run --rm -v "${pwd}/data:/app/data" user-journey-explorer:fast -- UJX PUBLIC USER
+
+(2) docker run --rm -v "${pwd}:/app" -v "${pwd}/allure-results:/app/allure-results" user-journey-explorer:fast pytest --alluredir=/app/allure-results -v
+
+(3) docker run --rm -v "${pwd}/allure-results:/app/allure-results" -v "${pwd}/allure-report:/app/allure-report" user-journey-explorer:fast allure generate /app/allure-results --clean -o /app/allure-report
+
+(4) Start-Process .\allure-report\index.html

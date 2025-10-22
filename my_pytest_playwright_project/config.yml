@@ -1,0 +1,17 @@
+UJX_PUBLIC_USER:
+  app_id: UJX
+  from_excel_transform_template: data/xslt/excel_source_to_xml_regression.xsl
+  to_html_transform_template: data/xslt/xml_to_html_regression_draft.xsl
+  excel_source: data/source_excel/UJX_PUBLIC_USER.xlsx
+
+UJX_PUBLIC_ADMIN:
+  app_id: UJX
+  from_excel_transform_template: data/xslt/excel_source_to_xml_regression.xsl
+  to_html_transform_template: data/xslt/xml_to_html_regression_draft.xsl
+  excel_source: data/source_excel/UJX_PUBLIC_USER.xlsx
+
+UJX_PRIVATE_USER:
+  app_id: UJX
+  from_excel_transform_template: data/xslt/excel_source_to_xml_regression.xsl
+  to_html_transform_template: data/xslt/xml_to_html_regression_draft.xsl
+  excel_source: data/source_excel/UJX_PUBLIC_USER.xlsx

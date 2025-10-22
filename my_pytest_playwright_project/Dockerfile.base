@@ -1,0 +1,30 @@
+# ──────────────────────────────────────────────
+# Dockerfile.base — Build once and reuse forever
+# ──────────────────────────────────────────────
+FROM mcr.microsoft.com/playwright/python:v1.52.0-jammy
+
+WORKDIR /app
+COPY requirements.txt ./
+
+# Install system dependencies for lxml, xslt, etc.
+RUN bash -c '\
+    retry() { for i in 1 2 3; do "$@" && break || { echo "Retry $i/3 failed"; sleep 10; }; done; }; \
+    retry apt-get update && \
+    retry apt-get install -y --no-install-recommends \
+        gcc \
+        python3-dev \
+        libxml2-dev \
+        libxslt1-dev \
+        build-essential && \
+    rm -rf /var/lib/apt/lists/* \
+'
+
+# Install Python dependencies
+RUN python -m pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Install Playwright browsers
+RUN playwright install --with-deps chromium firefox webkit
+
+# Sanity check
+RUN python -c "import lxml; print('lxml version:', lxml.__version__)"

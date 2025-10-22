@@ -1,0 +1,24 @@
+INFO     src.ujx_executor:ujx_executor.py:21 Clicking GET IN TOUCH
+ERROR    src.ujx_executor:safe_action.py:15 ❌ Exception in click: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("GET IN TOUCH")
+Traceback (most recent call last):
+  File "/app/src/safe_action.py", line 11, in wrapper
+    result = func(self, *args, **kwargs)
+  File "/app/src/ujx_executor.py", line 22, in click
+    self.driver.click(element)
+  File "/usr/local/lib/python3.10/dist-packages/playwright/sync_api/_generated.py", line 9927, in click
+    self._sync(
+  File "/usr/local/lib/python3.10/dist-packages/playwright/_impl/_sync_base.py", line 115, in _sync
+    return task.result()
+  File "/usr/local/lib/python3.10/dist-packages/playwright/_impl/_page.py", line 858, in click
+    return await self._main_frame.click(**locals_to_params(locals()))
+  File "/usr/local/lib/python3.10/dist-packages/playwright/_impl/_frame.py", line 549, in click
+    await self._channel.send("click", self._timeout, locals_to_params(locals()))
+  File "/usr/local/lib/python3.10/dist-packages/playwright/_impl/_connection.py", line 69, in send
+    return await self._connection.wrap_api_call(
+  File "/usr/local/lib/python3.10/dist-packages/playwright/_impl/_connection.py", line 558, in wrap_api_call
+    raise rewrite_error(error, f"{parsed_st['apiName']}: {error}") from None
+playwright._impl._errors.TimeoutError: Page.click: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator("GET IN TOUCH")

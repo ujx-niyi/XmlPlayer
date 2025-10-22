@@ -1,0 +1,2 @@
+INFO     src.ujx_executor:ujx_executor.py:32 Clicking GET IN TOUCH
+INFO     src.ujx_executor:safe_action.py:12 ✅ click succeeded

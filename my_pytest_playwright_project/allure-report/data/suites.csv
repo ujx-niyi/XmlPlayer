@@ -1,0 +1,8 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"failed","Tue Oct 21 22:37:50 GMT 2025","Tue Oct 21 22:38:20 GMT 2025","30006","tests","test_from_xml","","","","UJX: Unnamed","Run test cases dynamically loaded from XML."
+"passed","Wed Oct 22 02:21:17 GMT 2025","Wed Oct 22 02:21:17 GMT 2025","2","tests","test_from_xml","","","","UJX: Unnamed","
+    Executes test cases defined in XML (via data/output/latest.json).
+    Each <test> element may contain multiple <step> elements with
+    attributes like action, input, verb, element, outcome, automated, etc.
+    "
+"skipped","Wed Oct 22 02:02:36 GMT 2025","Wed Oct 22 02:02:36 GMT 2025","0","tests","test_from_xml","","","","test_from_xml[NOTSET-chromium]","Run test cases dynamically loaded from XML."
